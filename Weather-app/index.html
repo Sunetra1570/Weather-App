@@ -3,27 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
+    <title>Weather</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div id="weather-container">
-        <h2>Weather App</h2>
-        <input type="text" id="city" placeholder="Enter city">
-        <button onclick="getWeather()">Search</button>
-
-        <img id="weather-icon" alt="Weather Icon">
-
-        <div id="temp-div"></div>
-
-        <div id="weather-info"></div>
-
-        <div id="hourly-forecast"></div>
+    <!-- Dynamic Weather Background -->
+    <div class="weather-bg" id="weatherBg">
+        <!-- Sun Animation -->
+        <div class="sun-container">
+            <div class="sun">
+                <div class="sun-ray"></div>
+                <div class="sun-ray"></div>
+                <div class="sun-ray"></div>
+                <div class="sun-ray"></div>
+                <div class="sun-ray"></div>
+                <div class="sun-ray"></div>
+                <div class="sun-ray"></div>
+                <div class="sun-ray"></div>
+                <div class="sun-ray"></div>
+                <div class="sun-ray"></div>
+                <div class="sun-ray"></div>
+                <div class="sun-ray"></div>
+                <div class="sun-ray"></div>
+                <div class="sun-ray"></div>
+                <div class="sun-ray"></div>
+                <div class="sun-ray"></div>
+            </div>
+        </div>
+        
+        <!-- Rain Animation -->
+        <div class="rain-container">
+            <div class="raindrop" style="left: 5%; animation-delay: 0s;"></div>
+            <div class="raindrop" style="left: 10%; animation-delay: 0.15s;"></div>
+            <div class="raindrop" style="left: 15%; animation-delay: 0.3s;"></div>
+            <div class="raindrop" style="left: 20%; animation-delay: 0.45s;"></div>
+            <div class="raindrop" style="left: 25%; animation-delay: 0.6s;"></div>
+            <div class="raindrop" style="left: 30%; animation-delay: 0.75s;"></div>
+            <div class="raindrop" style="left: 35%; animation-delay: 0.9s;"></div>
+            <div class="raindrop" style="left: 40%; animation-delay: 1.05s;"></div>
+            <div class="raindrop" style="left: 45%; animation-delay: 1.2s;"></div>
+            <div class="raindrop" style="left: 50%; animation-delay: 1.35s;"></div>
+            <div class="raindrop" style="left: 55%; animation-delay: 0.1s;"></div>
+            <div class="raindrop" style="left: 60%; animation-delay: 0.25s;"></div>
+            <div class="raindrop" style="left: 65%; animation-delay: 0.4s;"></div>
+            <div class="raindrop" style="left: 70%; animation-delay: 0.55s;"></div>
+            <div class="raindrop" style="left: 75%; animation-delay: 0.7s;"></div>
+            <div class="raindrop" style="left: 80%; animation-delay: 0.85s;"></div>
+            <div class="raindrop" style="left: 85%; animation-delay: 1s;"></div>
+            <div class="raindrop" style="left: 90%; animation-delay: 1.15s;"></div>
+            <div class="raindrop" style="left: 95%; animation-delay: 1.3s;"></div>
+            <div class="raindrop" style="left: 8%; animation-delay: 0.2s;"></div>
+            <div class="raindrop" style="left: 18%; animation-delay: 0.35s;"></div>
+            <div class="raindrop" style="left: 28%; animation-delay: 0.5s;"></div>
+            <div class="raindrop" style="left: 38%; animation-delay: 0.65s;"></div>
+            <div class="raindrop" style="left: 48%; animation-delay: 0.8s;"></div>
+            <div class="raindrop" style="left: 58%; animation-delay: 0.95s;"></div>
+            <div class="raindrop" style="left: 68%; animation-delay: 1.1s;"></div>
+            <div class="raindrop" style="left: 78%; animation-delay: 1.25s;"></div>
+            <div class="raindrop" style="left: 88%; animation-delay: 1.4s;"></div>
+            <div class="raindrop" style="left: 13%; animation-delay: 0.05s;"></div>
+            <div class="raindrop" style="left: 33%; animation-delay: 0.5s;"></div>
+            <div class="raindrop" style="left: 73%; animation-delay: 1.0s;"></div>
+        </div>
+        
+        <!-- Cloud Animation -->
+        <div class="cloud-container">
+            <div class="cloud"></div>
+            <div class="cloud"></div>
+            <div class="cloud"></div>
+            <div class="cloud"></div>
+            <div class="cloud"></div>
+            <div class="cloud"></div>
+        </div>
+        
+        <!-- Stars for Night -->
+        <div class="stars-container">
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+        </div>
     </div>
+
+    <!-- Main App Container -->
+    <div class="app-container">
+        <!-- Top Header -->
+        <header class="app-header">
+            <h1 class="app-title">Weather App By Sunetra</h1>
+        </header>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="city" placeholder="Search for a city..." autocomplete="off">
+                <button class="search-btn" onclick="handleSearch()">
+                    Search<i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="content-wrapper" id="contentWrapper">
+            <!-- Initial State -->
+            <div class="empty-state" id="emptyState">
+                <i class="fas fa-cloud-sun-rain"></i>
+                <h2>Search for a city</h2>
+                <p>Get weather information for any location</p>
+            </div>
+
+            <!-- Weather Content -->
+            <div class="weather-content" id="weatherContent">
+                <!-- Current Weather Section -->
+                <section class="current-weather">
+                    <div class="location-info">
+                        <h2 class="city-name" id="cityName">--</h2>
+                        <p class="current-time" id="currentTime">--</p>
+                    </div>
+
+                    <div class="main-weather-info">
+                        <div class="weather-icon-large">
+                            <img id="weatherIcon" alt="Weather">
+                        </div>
+                        <div class="temp-info">
+                            <h1 class="temperature" id="temperature">--°</h1>
+                            <p class="weather-desc" id="weatherDesc">--</p>
+                        </div>
+                    </div>
+
+                    <div class="temp-range">
+                        <span id="tempHigh">H: --°</span>
+                        <span class="separator">|</span>
+                        <span id="tempLow">L: --°</span>
+                    </div>
+                </section>
+
+                <!-- Details Cards -->
+                <section class="details-section">
+                    <div class="detail-card-modern">
+                        <div class="detail-header">
+                            <i class="fas fa-droplet"></i>
+                            <span>Humidity</span>
+                        </div>
+                        <div class="detail-value-large" id="humidity">--</div>
+                        <div class="detail-bar">
+                            <div class="detail-bar-fill" id="humidityBar"></div>
+                        </div>
+                    </div>
+
+                    <div class="detail-card-modern">
+                        <div class="detail-header">
+                            <i class="fas fa-wind"></i>
+                            <span>Wind</span>
+                        </div>
+                        <div class="detail-value-large" id="windSpeed">--</div>
+                        <div class="wind-direction">
+                            <i class="fas fa-arrow-up" id="windArrow"></i>
+                            <span id="windDir">--</span>
+                        </div>
+                    </div>
+
+                    <div class="detail-card-modern">
+                        <div class="detail-header">
+                            <i class="fas fa-eye"></i>
+                            <span>Visibility</span>
+                        </div>
+                        <div class="detail-value-large" id="visibility">--</div>
+                    </div>
+
+                    <div class="detail-card-modern">
+                        <div class="detail-header">
+                            <i class="fas fa-temperature-half"></i>
+                            <span>Feels Like</span>
+                        </div>
+                        <div class="detail-value-large" id="feelsLike">--</div>
+                    </div>
+
+                    <div class="detail-card-modern">
+                        <div class="detail-header">
+                            <i class="fas fa-gauge"></i>
+                            <span>Pressure</span>
+                        </div>
+                        <div class="detail-value-large" id="pressure">--</div>
+                    </div>
+
+                    <div class="detail-card-modern">
+                        <div class="detail-header">
+                            <i class="fas fa-sun"></i>
+                            <span>UV Index</span>
+                        </div>
+                        <div class="detail-value-large" id="uvIndex">--</div>
+                    </div>
+                </section>
+
+                <!-- Hourly Forecast -->
+                <section class="hourly-section">
+                    <div class="section-header">
+                        <h3>Hourly Forecast</h3>
+                    </div>
+                    <div class="hourly-scroll" id="hourlyForecast">
+                        <!-- Dynamic hourly items -->
+                    </div>
+                </section>
+
+                <!-- Sun Times -->
+                <section class="sun-times-section">
+                    <div class="sun-times-card">
+                        <div class="sun-time-item">
+                            <i class="fas fa-sunrise"></i>
+                            <div>
+                                <p class="sun-label">Sunrise</p>
+                                <p class="sun-value" id="sunrise">--</p>
+                            </div>
+                        </div>
+                        <div class="sun-arc-container">
+                            <svg class="sun-arc" viewBox="0 0 200 100">
+                                <path d="M 10 90 Q 100 10 190 90" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+                                <circle class="sun-position" cx="100" cy="50" r="8" fill="#FFD700"/>
+                            </svg>
+                        </div>
+                        <div class="sun-time-item">
+                            <i class="fas fa-sunset"></i>
+                            <div>
+                                <p class="sun-label">Sunset</p>
+                                <p class="sun-value" id="sunset">--</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+            </div>
+        </div>
+    </div>
+
     <script src="./script.js"></script>
-<div class="cloud cloud1">☁️</div>
-<div class="cloud cloud2">☁️</div>
-<div class="cloud cloud3">☁️</div>
-<div class="cloud cloud4">☁️</div>
 </body>
 </html>
